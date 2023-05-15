@@ -1,6 +1,6 @@
 import { MiroItem } from "../miro/models/MiroItem";
 
-export type ChunkType = "sharepoint" | "confluence" | "person" | "miro";
+export type ChunkType = "sharepoint" | "confluence" | "person" | "miro" | "github";
 
 export type Chunk = {
   title: string;
@@ -18,6 +18,10 @@ export type ConfluenceChunk = {
   link: string;
   modified: string;
 } & Chunk;
+export type GitHubChunk =  {
+  link: string;
+  modified: string;
+} & Chunk;
 export type PeopleChunk = {} & Chunk;
 export type MiroChunk = MiroItem & Chunk;
 
@@ -27,5 +31,5 @@ export type EmbeddedChunk<T> = {
   Chunk;
 
 export type EmbeddedSourceChunk = EmbeddedChunk<
-  SharepointChunk | MiroChunk | ConfluenceChunk | PeopleChunk
+  SharepointChunk | MiroChunk | ConfluenceChunk | PeopleChunk | GitHubChunk
 >;

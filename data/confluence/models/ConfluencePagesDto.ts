@@ -18,6 +18,6 @@ export type ConfluencePageDto = {
     };
   };
   _links: {
-    self: string;
+    webui: string;
   };
 };

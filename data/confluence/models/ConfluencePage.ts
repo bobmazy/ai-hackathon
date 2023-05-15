@@ -14,6 +14,6 @@ export function toConfluencePage(page: ConfluencePageDto): ConfluencePage {
     title: page.title,
     lastUpdated: page.history.lastUpdated.when,
     content: page.body.view.value,
-    link: page._links.self,
+    link: page._links.webui,
   };
 }

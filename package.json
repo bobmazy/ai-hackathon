@@ -5,17 +5,24 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "read": "pnpm read:sp && pnpm read:confluence && pnpm read:teams && pnpm read:miro",
+    "read:sp": "npx tsx data/sharepoint/sp-chunk-creation.ts",
+    "read:confluence": "npx tsx data/confluence/cf-chunk-creation.ts",
+    "read:teams": "npx tsx data/microsoft/people/people-chunk-creation.ts",
+    "read:miro": "npx tsx data/miro/miro-chunk-creation.ts",
+    "create:embeddings": "npx tsx data/embeddings-creation.ts",
+    "chat": "npx tsx src/chat.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@azure/msal-node": "^1.17.2",
+    "axios": "^1.4.0",
     "cheerio": "1.0.0-rc.12",
     "cli-progress": "^3.12.0",
     "dotenv": "^16.0.3",
-    "got": "^12.6.0",
     "gpt-3-encoder": "^1.1.4",
     "openai": "^3.2.1"
   },

@@ -1,3 +1,4 @@
+import "dotenv/config";
 import {
   ConfluenceChunk,
   EmbeddedChunk,
@@ -6,6 +7,8 @@ import {
   PeopleChunk,
   SharepointChunk,
 } from "../data/common/types";
+
+const MIRO_BOARD_LINK = process.env.MIRO_BOARD_LINK;
 
 export function getGptSystemPromptInfos(results: EmbeddedSourceChunk[]) {
   let content =
@@ -66,7 +69,7 @@ export function getGptSystemPromptInfos(results: EmbeddedSourceChunk[]) {
   if (miro.length > 0) {
     content +=
       "Use the Miro board of the lise GmbH, to answer the question.\n" +
-      "The Miro Board is available at https://miro.com/app/board/uXjVPwinM2s=/\n" +
+      `The Miro Board is available at ${MIRO_BOARD_LINK}\n` +
       "The Miro Board contains information to find things in the office, such as the location of the first aid kit.\n" +
       "Miro Infos:\n" +
       miro.map(convertMiroChunkToPromptMessage).join("\n") +

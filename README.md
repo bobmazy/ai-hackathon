@@ -26,9 +26,9 @@ yarn
 
 ## Example
 
-1. Process Articles from SharePoint `npx tsx data/read-sp-data.ts`
-2. Create Embeddings `npx tsx data/create-embeddings.ts`
-3. Run Chat `npx tsx src/chat.ts`
+1. Process all Information `pnpm read`
+2. Create Embeddings `pnpm create:embeddings`
+3. Run Chat `pnpm chat`
 
 ## Resources
 

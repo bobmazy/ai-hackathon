@@ -16,14 +16,12 @@ async function createDataset(destDataFilePath: string) {
 
 function* createChunkedMiroItems(items: MiroItem[]): Generator<MiroChunk> {
   for (const item of items) {
-    const parsedContent = JSON.stringify(item);
-
     yield {
       title: item.title,
       area: item.area,
       identifier: item.identifier,
       content: item.content ?? "",
-      tokens: countTokens(parsedContent),
+      tokens: countTokens(item.content),
       type: "miro",
     };
   }

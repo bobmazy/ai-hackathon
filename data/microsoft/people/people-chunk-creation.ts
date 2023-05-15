@@ -16,7 +16,20 @@ async function createDataset(outputFilePath: string) {
 
 function* createChunkedPeople(people: MS_Person[]): Generator<PeopleChunk> {
   for (const person of people) {
-    const parsedContent = JSON.stringify(person);
+    let parsedContent = "";
+    Object.keys(person).forEach((key) => {
+      if (person[key] === null) return;
+      if (key === "id") return;
+
+      if (key === "phoneNumbers") {
+        parsedContent += `${key}: `;
+        person[key].forEach((phoneNumber) => {
+          parsedContent += `${phoneNumber.number} (${phoneNumber.type}). `;
+        });
+        return;
+      }
+      parsedContent += `${key}: ${person[key]}. `;
+    });
 
     yield {
       title: person.fullName,

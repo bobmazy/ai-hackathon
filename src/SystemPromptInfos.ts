@@ -15,10 +15,10 @@ export function getGptSystemPromptInfos(results: EmbeddedSourceChunk[]) {
     "Use and try to combine the following information to answer the question.\n" +
     "Use in your answer the different following information:\n";
 
-  const articles: EmbeddedChunk<SharepointChunk>[] = results.filter(
+  const spArticles: EmbeddedChunk<SharepointChunk>[] = results.filter(
     (result) => result.type === "sharepoint"
   ) as EmbeddedChunk<SharepointChunk>[];
-  const confluence: EmbeddedChunk<ConfluenceChunk>[] = results.filter(
+  const cfArticles: EmbeddedChunk<ConfluenceChunk>[] = results.filter(
     (result) => result.type === "confluence"
   ) as EmbeddedChunk<ConfluenceChunk>[];
   const people: EmbeddedChunk<PeopleChunk>[] = results.filter(
@@ -28,27 +28,27 @@ export function getGptSystemPromptInfos(results: EmbeddedSourceChunk[]) {
     (result) => result.type === "miro"
   ) as EmbeddedChunk<MiroChunk>[];
 
-  console.log(`Found ${articles.length} articles`);
-  console.log(`Found ${confluence.length} confluence articles`);
+  console.log(`Found ${spArticles.length} sharepoint articles`);
+  console.log(`Found ${cfArticles.length} confluence articles`);
   console.log(`Found ${people.length} people`);
   console.log(`Found ${miro.length} miro items`);
 
-  if (articles.length > 0) {
+  if (spArticles.length > 0) {
     content +=
       "Use the articles from the lise Sharepoint, to answer the question.\n" +
       "Articles:\n" +
-      articles.map(convertSpChunkToPromptMessage).join("\n") +
+      spArticles.map(convertSpChunkToPromptMessage).join("\n") +
       "\n" +
       `In your answers, note today's date ${new Date().toLocaleDateString()} and the date of the articles.\n` +
       "Since you know the date of the article and today's date, you can correct outdated information, such as age or start date, in your answer.\n" +
       "Output the source of your answer with a link to the article.\n";
   }
 
-  if (confluence.length > 0) {
+  if (cfArticles.length > 0) {
     content +=
       "Use the articles from the technical lise Wiki, to answer the question.\n" +
       "Articles:\n" +
-      confluence.map(convertCfChunkToPromptMessage).join("\n") +
+      cfArticles.map(convertCfChunkToPromptMessage).join("\n") +
       "\n" +
       `In your answers, note today's date ${new Date().toLocaleDateString()} and the date of the articles.\n` +
       "Since you know the date of the article and today's date, you can correct outdated information, such as age or start date, in your answer.\n" +

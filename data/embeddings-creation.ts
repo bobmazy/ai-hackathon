@@ -52,7 +52,7 @@ async function createEmbeddedChunks() {
 
 async function createEmbeddedChunk<T extends Chunk>(src: T[]): Promise<void> {
   for (const [_i, chunk] of src.entries()) {
-    await new Promise((r) => setTimeout(r, 10));
+    await new Promise((r) => setTimeout(r, 30));
 
     const result = await openai.createEmbedding({
       model: openAITextModel,

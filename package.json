@@ -6,10 +6,10 @@
   "main": "index.js",
   "scripts": {
     "format": "prettier --write .",
-    "read": "pnpm read:sp && pnpm read:confluence && pnpm read:teams && pnpm read:miro",
+    "read": "pnpm read:sp && pnpm read:confluence && pnpm read:people && pnpm read:miro",
     "read:sp": "npx tsx data/sharepoint/sp-chunk-creation.ts",
     "read:confluence": "npx tsx data/confluence/cf-chunk-creation.ts",
-    "read:teams": "npx tsx data/microsoft/people/people-chunk-creation.ts",
+    "read:people": "npx tsx data/microsoft/people/people-chunk-creation.ts",
     "read:miro": "npx tsx data/miro/miro-chunk-creation.ts",
     "create:embeddings": "npx tsx data/embeddings-creation.ts",
     "chat": "npx tsx src/chat.ts"

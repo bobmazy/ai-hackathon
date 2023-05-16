@@ -1,17 +1,18 @@
 import { MS_Person } from "./models/MS_Person";
-import { writeFile } from "node:fs/promises";
 import { getPeople } from "./people-http-get";
 import countTokens from "../../common/countTokens";
 import { PeopleChunk } from "../../common/types";
+import { saveDataToFile } from "../../common/saveDataToFile";
+import coloredLog from "../../common/coloredLog";
 
 const dataPath = "./data/microsoft/people/people-data.json";
 
 async function createDataset(outputFilePath: string) {
   const people = await getPeople();
-  console.log("\x1b[32m%s\x1b[0m", `Found ${people.length} people`);
+  coloredLog(`Found ${people.length} people`, "success");
 
   const chunks = [...createChunkedPeople(people)];
-  await writeFile(outputFilePath, JSON.stringify(chunks, null, 2));
+  await saveDataToFile(outputFilePath, chunks);
 }
 
 function* createChunkedPeople(people: MS_Person[]): Generator<PeopleChunk> {

@@ -6,21 +6,28 @@ import {
   publicRepos,
   readmeOrNull,
 } from "./gh-http-get";
-import { writeFile } from "node:fs/promises";
 import countTokens from "../common/countTokens";
 import { valueOrFallback } from "../common/strUtils";
+import coloredLog from "../common/coloredLog";
+import { saveDataToFile } from "../common/saveDataToFile";
 
-const dataPath = "./data/github/github-data.json";
+const dataPath = "./data/github/gh-data.json";
 
 async function createDataset(dataPath: string) {
   const org = "liseGmbH";
   const repos = await publicRepos(org);
+  coloredLog(`Found ${repos.length} repos`, "success");
 
   const chunks: GitHubChunk[] = [];
   for await (const chunk of createChunkedRepos(repos, org)) {
     chunks.push(chunk);
   }
-  await writeFile(dataPath, JSON.stringify(chunks, null, 2));
+  coloredLog(
+    `Created ${chunks.length} chunks (max 800 tokens) from ${repos.length} repos`,
+    "success"
+  );
+
+  await saveDataToFile(dataPath, chunks);
 }
 
 function* splitContent(content: string, maxTokens = 800): Generator<string> {
@@ -81,6 +88,7 @@ async function* generateChunk(
   )} und Sprache und Technologie ${repo.language} \n`;
   const readme = await readmeOrNull(repo);
   if (readme) {
+    console.log(readme);
     content += `README.md von ${repo.name} mit Link ${readme.htmlUrl}${readme.decodedContent} \n`;
   }
 

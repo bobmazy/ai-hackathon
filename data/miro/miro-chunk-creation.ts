@@ -1,17 +1,19 @@
 import { MiroItem } from "./models/MiroItem";
-import { writeFile } from "node:fs/promises";
 import countTokens from "../common/countTokens";
 import { getMiroItems } from "./miro-data-parser";
 import { MiroChunk } from "../common/types";
+import { saveDataToFile } from "../common/saveDataToFile";
+import coloredLog from "../common/coloredLog";
 
 const destDataFilePath = "./data/miro/miro-data.json";
 
 async function createDataset(destDataFilePath: string) {
   const items = getMiroItems();
-  console.log("\x1b[32m%s\x1b[0m", `Found ${items.length} Miro Items`);
+  coloredLog(`Found ${items.length} Miro Items`, "success");
+
   const chunks = [...createChunkedMiroItems(items)];
 
-  await writeFile(destDataFilePath, JSON.stringify(chunks, null, 2));
+  await saveDataToFile(destDataFilePath, chunks);
 }
 
 function* createChunkedMiroItems(items: MiroItem[]): Generator<MiroChunk> {

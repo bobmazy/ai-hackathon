@@ -9,6 +9,6 @@ export const getMiroItems = () => {
   return csvRows.map((row) => {
     const [title, area, identifier, content] = row.split(";");
 
-    return { title, area, identifier, content };
+    return { title, area, identifier, content: content.replace(/\r$/, "") };
   });
 };

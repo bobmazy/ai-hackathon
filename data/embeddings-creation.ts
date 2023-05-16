@@ -34,12 +34,12 @@ await writeFile(
 
 function initProgressBar(): SingleBar {
   const progressBar = new SingleBar({}, cliProgress.Presets.shades_classic);
-  const chunksCount = 
-      SpChunks.length + 
-      ConfluenceChunks.length + 
-      PeopleChunks.length + 
-      MiroChunks.length + 
-      GitHubChunks.length;
+  const chunksCount =
+    SpChunks.length +
+    ConfluenceChunks.length +
+    PeopleChunks.length +
+    MiroChunks.length +
+    GitHubChunks.length;
   progressBar.start(chunksCount, 0);
 
   return progressBar;

@@ -85,10 +85,10 @@ export function getGptSystemPromptInfos(results: EmbeddedSourceChunk[]) {
   if (github.length > 0) {
     content +=
         "Use the GitHub repositories information of the lise GmbH, to answer the question.\n" +
-        " Infos:\n" +
+        "GitHub Infos:\n" +
         github.map(convertGithubChunkToPromptMessage).join("\n") +
         "\n" +
-        "Use this information when someone asks for information about the office.\n" +
+        "Use this information when someone asks for information about projects, programming languages or developers.\n" +
         "Return also a link to the GitHub Repository when useful.\n";
   }
 

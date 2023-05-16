@@ -3,6 +3,7 @@ import {
   Chunk,
   ConfluenceChunk,
   EmbeddedSourceChunk,
+  GitHubChunk,
   MiroChunk,
   PeopleChunk,
   SharepointChunk,
@@ -12,6 +13,7 @@ import SpChunks from "./sharepoint/sp-data.json";
 import ConfluenceChunks from "./confluence/confluence-data.json";
 import PeopleChunks from "./microsoft/people/people-data.json";
 import MiroChunks from "./miro/miro-data.json";
+import GitHubChunks from "./github/github-data.json";
 import { openAIApiInstance } from "../src/open-api/open-api-factory";
 
 const openAITextModel = "text-embedding-ada-002";
@@ -32,12 +34,12 @@ await writeFile(
 
 function initProgressBar(): SingleBar {
   const progressBar = new SingleBar({}, cliProgress.Presets.shades_classic);
-  const chunksCount =
-    SpChunks.length +
-    ConfluenceChunks.length +
-    PeopleChunks.length +
-    MiroChunks.length;
-
+  const chunksCount = 
+      SpChunks.length + 
+      ConfluenceChunks.length + 
+      PeopleChunks.length + 
+      MiroChunks.length + 
+      GitHubChunks.length;
   progressBar.start(chunksCount, 0);
 
   return progressBar;
@@ -48,6 +50,7 @@ async function createEmbeddedChunks() {
   await createEmbeddedChunk<ConfluenceChunk>(ConfluenceChunks);
   await createEmbeddedChunk<PeopleChunk>(PeopleChunks);
   await createEmbeddedChunk<MiroChunk>(MiroChunks);
+  await createEmbeddedChunk<GitHubChunk>(GitHubChunks);
 }
 
 async function createEmbeddedChunk<T extends Chunk>(src: T[]): Promise<void> {

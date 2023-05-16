@@ -1,16 +1,21 @@
 import "dotenv/config";
 import { createInterface } from "node:readline/promises";
 import { EmbeddedSourceChunk } from "../data/common/types";
-import chunks from "../data/embeddings.json";
+import SharepointChunks from "../data/sharepoint/sp-embeddings.json";
+import ConfluenceChunks from "../data/confluence/cf-embeddings.json";
+import PeopleChunks from "../data/microsoft/people/people-embeddings.json";
+import MiroChunks from "../data/miro/miro-embeddings.json";
+import GithubChunks from "../data/github/gh-embeddings.json";
 import { cosineSimilarity } from "./cosineSimilarity";
 import { getGptSystemPromptInfos } from "./SystemPromptInfos";
 import { openAIApiInstance } from "./open-api/open-api-factory";
+import coloredLog from "../data/common/coloredLog";
 
 const rl = createInterface({
   input: process.stdin,
   output: process.stdout,
 });
-console.log("\x1b[36m%s\x1b[0m", "Welcome to the Lise AI assistant!");
+coloredLog("Welcome to the Lise AI assistant!", "lise");
 const query = await rl.question("What is your question?\n");
 
 const textEmbeddingClient = openAIApiInstance("text-embedding-ada-002");
@@ -20,7 +25,13 @@ const embeddingResponse = await textEmbeddingClient.createEmbedding({
 });
 const queryEmbedding = embeddingResponse.data.data[0].embedding;
 
-const sourceData = chunks as EmbeddedSourceChunk[];
+const sourceData = [
+  ...(SharepointChunks as EmbeddedSourceChunk[]),
+  ...(ConfluenceChunks as EmbeddedSourceChunk[]),
+  ...(PeopleChunks as EmbeddedSourceChunk[]),
+  ...(MiroChunks as EmbeddedSourceChunk[]),
+  ...(GithubChunks as EmbeddedSourceChunk[]),
+];
 const rankedResults = sourceData.sort(
   (a, b) =>
     cosineSimilarity(queryEmbedding, b.embedding) -

@@ -1,9 +1,10 @@
 import { load } from "cheerio";
-import { writeFile } from "node:fs/promises";
 import { SharepointChunk } from "../common/types";
 import { getKnowledgeBaseArticles, getRootArticles } from "./sp-http-get";
 import { SpPage } from "./models/SpPage";
 import countTokens from "../common/countTokens";
+import { saveDataToFile } from "../common/saveDataToFile";
+import coloredLog from "../common/coloredLog";
 
 const destDataPath = "./data/sharepoint/sp-data.json";
 
@@ -11,15 +12,15 @@ async function createDataset(path: string) {
   const kbArticles = await getKnowledgeBaseArticles();
   const rootArticles = await getRootArticles();
   const articles = [...kbArticles, ...rootArticles];
-  console.log("\x1b[32m%s\x1b[0m", `Found ${articles.length} Sharepoint pages`);
+  coloredLog(`Found ${articles.length} Sharepoint pages`, "success");
 
   const chunkedPages = [...createChunkedPages(articles)];
-  console.log(
-    "\x1b[32m%s\x1b[0m",
-    `Found ${chunkedPages.length} chunks (max 800 tokens) from ${articles.length} pages`
+  coloredLog(
+    `Created ${chunkedPages.length} chunks (max 800 tokens) from ${articles.length} pages`,
+    "success"
   );
 
-  await writeFile(destDataPath, JSON.stringify(chunkedPages, null, 2));
+  await saveDataToFile(destDataPath, chunkedPages);
 }
 
 function* createChunkedPages(

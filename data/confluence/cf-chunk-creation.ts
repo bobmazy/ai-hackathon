@@ -1,18 +1,19 @@
 import { ConfluenceChunk } from "../common/types";
 import { load } from "cheerio";
-import { writeFile } from "node:fs/promises";
 import { ConfluencePage } from "./models/ConfluencePage";
 import countTokens from "../common/countTokens";
 import { getPages } from "./cf-http-get";
+import { saveDataToFile } from "../common/saveDataToFile";
+import coloredLog from "../common/coloredLog";
 
 const dataPath = "./data/confluence/confluence-data.json";
 
 async function createDataset(dataPath: string) {
   const pages = await getPages("LSVD");
-  console.log("\x1b[32m%s\x1b[0m", `Found ${pages.length} pages`);
+  coloredLog(`Found ${pages.length} pages`, "success");
 
   const chunks = [...createChunkedPages(pages)];
-  await writeFile(dataPath, JSON.stringify(chunks, null, 2));
+  await saveDataToFile(dataPath, chunks);
 }
 
 function* createChunkedPages(

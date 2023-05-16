@@ -10,6 +10,10 @@ export function decodedStr(encodedContent: string, encoding: string): string {
   }
 }
 
+export function base64Str(str: string): string {
+  return Buffer.from(str).toString("base64");
+}
+
 export function valueOrFallback(
   value: string | null | undefined,
   fallback: string

@@ -12,15 +12,14 @@
     "read:people": "npx tsx data/microsoft/people/people-chunk-creation.ts",
     "read:miro": "npx tsx data/miro/miro-chunk-creation.ts",
     "read:github": "npx tsx data/github/gh-chunk-creation.ts",
-
     "create:embeddings": "pnpm create:sp && pnpm create:confluence && pnpm create:people && pnpm create:miro",
     "create:sp": "npx tsx data/sharepoint/sp-embeddings-creation.ts",
     "create:confluence": "npx tsx data/confluence/cf-embeddings-creation.ts",
     "create:people": "npx tsx data/microsoft/people/people-embeddings-creation.ts",
     "create:miro": "npx tsx data/miro/miro-embeddings-creation.ts",
     "create:github": "npx tsx data/github/gh-embeddings-creation.ts",
-
-    "chat": "npx tsx src/chat.ts"
+    "chat": "npx tsx src/chat.ts",
+    "create:graph": "npx tsx src/visualization/graph-creation.ts"
   },
   "keywords": [],
   "author": "",
@@ -32,7 +31,8 @@
     "cli-progress": "^3.12.0",
     "dotenv": "^16.0.3",
     "gpt-3-encoder": "^1.1.4",
-    "openai": "^3.2.1"
+    "openai": "^3.2.1",
+    "xmlbuilder": "^15.1.1"
   },
   "devDependencies": {
     "@types/cli-progress": "^3.11.0",

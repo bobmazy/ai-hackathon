@@ -1,6 +1,11 @@
 import { MiroItem } from "../miro/models/MiroItem";
 
-export type ChunkType = "sharepoint" | "confluence" | "person" | "miro" | "github";
+export type ChunkType =
+  | "sharepoint"
+  | "confluence"
+  | "person"
+  | "miro"
+  | "github";
 
 export type Chunk = {
   title: string;
@@ -18,7 +23,7 @@ export type ConfluenceChunk = {
   link: string;
   modified: string;
 } & Chunk;
-export type GitHubChunk =  {
+export type GitHubChunk = {
   link: string;
   modified: string;
 } & Chunk;

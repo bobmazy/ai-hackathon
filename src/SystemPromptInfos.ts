@@ -2,7 +2,8 @@ import "dotenv/config";
 import {
   ConfluenceChunk,
   EmbeddedChunk,
-  EmbeddedSourceChunk, GitHubChunk,
+  EmbeddedSourceChunk,
+  GitHubChunk,
   MiroChunk,
   PeopleChunk,
   SharepointChunk,
@@ -28,14 +29,14 @@ export function getGptSystemPromptInfos(results: EmbeddedSourceChunk[]) {
     (result) => result.type === "miro"
   ) as EmbeddedChunk<MiroChunk>[];
   const github: EmbeddedChunk<GitHubChunk>[] = results.filter(
-      (result) => result.type === "github"
+    (result) => result.type === "github"
   ) as EmbeddedChunk<GitHubChunk>[];
 
   console.log(`Found ${spArticles.length} sharepoint articles`);
   console.log(`Found ${cfArticles.length} confluence articles`);
   console.log(`Found ${people.length} people`);
   console.log(`Found ${miro.length} miro items`);
-  console.log(`Found ${github.length} github items`)
+  console.log(`Found ${github.length} github items`);
 
   if (spArticles.length > 0) {
     content +=
@@ -84,12 +85,12 @@ export function getGptSystemPromptInfos(results: EmbeddedSourceChunk[]) {
 
   if (github.length > 0) {
     content +=
-        "Use the GitHub repositories information of the lise GmbH, to answer the question.\n" +
-        "GitHub Infos:\n" +
-        github.map(convertGithubChunkToPromptMessage).join("\n") +
-        "\n" +
-        "Use this information when someone asks for information about projects, programming languages or developers.\n" +
-        "Return also a link to the GitHub Repository when useful.\n";
+      "Use the GitHub repositories information of the lise GmbH, to answer the question.\n" +
+      "GitHub Infos:\n" +
+      github.map(convertGithubChunkToPromptMessage).join("\n") +
+      "\n" +
+      "Use this information when someone asks for information about projects, programming languages or developers.\n" +
+      "Return also a link to the GitHub Repository when useful.\n";
   }
 
   return content;
@@ -121,11 +122,13 @@ function convertPeopleChunkToPromptMessage(chunk: EmbeddedChunk<PeopleChunk>) {
 function convertMiroChunkToPromptMessage(chunk: EmbeddedChunk<MiroChunk>) {
   return `${chunk.title}\n` + `${chunk.content}\n`;
 }
-function convertGithubChunkToPromptMessage(chunk: EmbeddedChunk<ConfluenceChunk>) {
+function convertGithubChunkToPromptMessage(
+  chunk: EmbeddedChunk<ConfluenceChunk>
+) {
   return (
-      `${chunk.title}\n` +
-      `${chunk.content}\n` +
-      `${chunk.link}\n` +
-      `last modified on ${chunk.modified}\n`
+    `${chunk.title}\n` +
+    `${chunk.content}\n` +
+    `${chunk.link}\n` +
+    `last modified on ${chunk.modified}\n`
   );
 }

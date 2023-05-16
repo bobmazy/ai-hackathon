@@ -2,7 +2,8 @@ import { writeFile } from "node:fs/promises";
 import {
   Chunk,
   ConfluenceChunk,
-  EmbeddedSourceChunk, GitHubChunk,
+  EmbeddedSourceChunk,
+  GitHubChunk,
   MiroChunk,
   PeopleChunk,
   SharepointChunk,
@@ -33,10 +34,12 @@ await writeFile(
 
 function initProgressBar(): SingleBar {
   const progressBar = new SingleBar({}, cliProgress.Presets.shades_classic);
-  const chunksCount =
-  
-    GitHubChunks.length;
-
+  const chunksCount = 
+      SpChunks.length + 
+      ConfluenceChunks.length + 
+      PeopleChunks.length + 
+      MiroChunks.length + 
+      GitHubChunks.length;
   progressBar.start(chunksCount, 0);
 
   return progressBar;
@@ -46,7 +49,7 @@ async function createEmbeddedChunks() {
   await createEmbeddedChunk<SharepointChunk>(SpChunks);
   await createEmbeddedChunk<ConfluenceChunk>(ConfluenceChunks);
   await createEmbeddedChunk<PeopleChunk>(PeopleChunks);
-  await createEmbeddedChunk<MiroChunk>(MiroChunks)
+  await createEmbeddedChunk<MiroChunk>(MiroChunks);
   await createEmbeddedChunk<GitHubChunk>(GitHubChunks);
 }
 

@@ -5,7 +5,8 @@ export type ChunkType =
   | "confluence"
   | "person"
   | "miro"
-  | "github";
+  | "github"
+  | "jira";
 
 export type Chunk = {
   title: string;
@@ -27,6 +28,9 @@ export type GitHubChunk = {
   link: string;
   modified: string;
 } & Chunk;
+export type JiraChunk = {
+  link: string;
+} & Chunk;
 export type PeopleChunk = {} & Chunk;
 export type MiroChunk = MiroItem & Chunk;
 
@@ -36,5 +40,10 @@ export type EmbeddedChunk<T> = {
   Chunk;
 
 export type EmbeddedSourceChunk = EmbeddedChunk<
-  SharepointChunk | MiroChunk | ConfluenceChunk | PeopleChunk | GitHubChunk
+  | SharepointChunk
+  | MiroChunk
+  | ConfluenceChunk
+  | PeopleChunk
+  | GitHubChunk
+  | JiraChunk
 >;

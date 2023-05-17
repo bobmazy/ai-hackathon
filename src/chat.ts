@@ -6,6 +6,7 @@ import ConfluenceChunks from "../data/confluence/cf-embeddings.json";
 import PeopleChunks from "../data/microsoft/people/people-embeddings.json";
 import MiroChunks from "../data/miro/miro-embeddings.json";
 import GithubChunks from "../data/github/gh-embeddings.json";
+import JiraChunks from "../data/jira/jira-embeddings.json";
 import { cosineSimilarity } from "./cosineSimilarity";
 import { getGptSystemPromptInfos } from "./SystemPromptInfos";
 import { openAIApiInstance } from "./open-api/open-api-factory";
@@ -31,6 +32,7 @@ const sourceData = [
   ...(PeopleChunks as EmbeddedSourceChunk[]),
   ...(MiroChunks as EmbeddedSourceChunk[]),
   ...(GithubChunks as EmbeddedSourceChunk[]),
+  ...(JiraChunks as EmbeddedSourceChunk[])
 ];
 const rankedResults = sourceData.sort(
   (a, b) =>
